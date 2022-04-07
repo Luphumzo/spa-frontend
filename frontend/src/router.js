@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "./store/index";
 
 Vue.use(VueRouter);
 
@@ -49,14 +50,16 @@ const router = new VueRouter({
     routes: routes
 });
 
-// router.beforeEach((to, from, next) => {
-//     if (to.name !== "Login" && !isAuthenticated) {
-//         next({ name: "Login" });
-//     } else {
-//         console.log("Not Authed 2");
-//         next();
-//     }
-// });
+router.beforeEach((to, from, next) => {
+    let isAuthenticated = store.getters["auth/isAuthenticated"];
+
+    console.log(from);
+    if (to.name === "dashboard" && !isAuthenticated && from.name !== null) {
+        next({ name: "Login" });
+    } else {
+        next();
+    }
+});
 
 router.afterEach(() => {
     // Remove initial loading

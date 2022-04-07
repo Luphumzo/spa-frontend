@@ -287,6 +287,7 @@ export default {
                         }
                     });
                     this.$store.dispatch("auth/setUser", response.data);
+                    this.$store.dispatch("auth/setIsAuthenticated", true);
                     this.$store.dispatch(
                         "auth/setUserLogoutToken",
                         `${tokenType}  ${token}`
